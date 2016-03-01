@@ -7,9 +7,8 @@ import java.util.List;
  * Define um nó no grafo
  * @author bruno
  */
-public class No implements Comparable<No> {
+public class No {
     private final String id; //Identificador desse nó
-    private Aresta arestaMenor;
     private EstadoNo estadoNo; //Estado atual do nó    
     private List<Aresta> adjacentes; //Lista de arestas das quais ele faz parte(adjacentes)
     private int conjunto;
@@ -39,14 +38,7 @@ public class No implements Comparable<No> {
 
     public void setConjunto(int conjunto) {
         this.conjunto = conjunto;
-    }
-
-    
-    public void setArestaMenor(Aresta arestaMenor) {
-        this.arestaMenor = arestaMenor;
-    }
-    
-    
+    }    
     /**
      * Adiciona uma aresta adjacente a esse nó
      * @param aresta aresta adjacente
@@ -67,13 +59,4 @@ public class No implements Comparable<No> {
         return adjacentes;
     }
     
-    @Override
-    public int compareTo(No no) {
-        return 0;
-        /* if(this.getCustoMinimo() < no.getCustoMinimo()) {
-            return -1;
-        } else {
-            return 1;
-        }*/ 
-}
 }

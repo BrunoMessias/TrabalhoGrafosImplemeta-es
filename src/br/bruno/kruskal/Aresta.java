@@ -36,5 +36,6 @@ public class Aresta {
      */
     private void colocarArestaNaAdjacentes(Aresta aresta){
         aresta.getOrigem().addAdjacentes(aresta);
+        aresta.getOrigem().addAdjacentes(aresta);
     }
 }

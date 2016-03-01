@@ -11,6 +11,7 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) {
+        /**
         Grafo grafo = new Grafo();
         
         //Cria os nós do grafo
@@ -47,8 +48,25 @@ public class Main {
         new Aresta(grafo.getNo(4), grafo.getNo(7), 70);
         new Aresta(grafo.getNo(5), grafo.getNo(6), 20);
         new Aresta(grafo.getNo(6), grafo.getNo(7), 66);
+        **/
         
-        //Descobre o menor caminho
-        grafo.kruskal(0);
+        Grafo grafo = GrafoAleatorioKruskal.gerar(10000, 2, 1, 100);
+        //Gera a arvore geradora com custo minimo
+        grafo.kruskal();
+        
+        //TESTE
+        int teste = grafo.getNo(0).getConjunto();
+        boolean answer = true;
+        for(No no : grafo.getNos()){
+            if (teste!= no.getConjunto()){
+                answer = false;
+            }
+        }
+        if(answer){
+            System.out.println("Todos os nós pertecem ao mesmo conjunto");
+        }
+        else{
+            System.out.println("Deu erro");
+        }
     }
 }

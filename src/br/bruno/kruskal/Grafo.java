@@ -11,12 +11,16 @@ import java.util.Queue;
  * @author bruno
  */
 public class Grafo {
-    private List<No> nos = new ArrayList<>(); //Nós desse grafo
-    private Queue<Aresta> listCaminhoMinimo = new LinkedList<>();
+    private final List<No> nos = new ArrayList<>(); //Nós desse grafo
+    private final Queue<Aresta> arvoreGeradoraMinima = new LinkedList<>();
     
     public void addNo(No no) {
         nos.add(no);
         no.setConjunto(nos.size());
+    }
+
+    public List<No> getNos() {
+        return nos;
     }
     
     public No getNo(int pos) {
@@ -25,45 +29,48 @@ public class Grafo {
     
     
     public void findLessAresta(){
-        Aresta arestaMinima = null;
-        for(int i = 0; i < nos.size(); i++){
-            for(Aresta aresta : nos.get(i).getAdjacentes()){
-                if(aresta.getOrigem().getConjunto() != aresta.getDestino().getConjunto()){
-                    if(arestaMinima == null || arestaMinima.getCusto() > aresta.getCusto()){
-                    arestaMinima = aresta;
+        Aresta arestaMinima = new Aresta (new No("teste"), new No("teste"), Integer.MAX_VALUE);//Valores simbolicos para a inicialização da aresta
+        for(No no : nos){
+            
+            for(Aresta aresta : no.getAdjacentes()){
+                if(aresta.getOrigem().getConjunto() != aresta.getDestino().getConjunto()){ //Compara se o conjunto das extremidades da aresta são diferentes
+                    if(arestaMinima.getCusto() >= aresta.getCusto()){ //Compara se o custo da aresta minima é maior que a aresta a ser comparada
+                    arestaMinima = aresta; // Recebe a aresta menor com o objetivo de armazenar a menor aresta possível
                     }  
                 }
             }
         }
-        changeConjunto(arestaMinima.getDestino().getConjunto(), arestaMinima.getOrigem().getConjunto());
-        listCaminhoMinimo.add(arestaMinima);
+        changeConjunto(arestaMinima); 
+        arvoreGeradoraMinima.add(arestaMinima); //Adiciona a lista que representa a arvoreGeradoraMinima
     }
     
-    public void changeConjunto(int conjuntoOld, int conjuntoNew){
-        for(No no : nos){
-            if(no.getConjunto() == conjuntoOld){
-                no.setConjunto(conjuntoNew);
+    /**
+     * Muda o conjunto de todos os nós alvos,acrescentando-os a outro conjunto
+     * @param aresta
+     */
+    public void changeConjunto(Aresta aresta){
+        int conjuntoOld = aresta.getDestino().getConjunto();
+        int conjuntoNew = aresta.getOrigem().getConjunto();
+        for(No no : nos){ //Percorre todos os nós 
+            if(no.getConjunto() == conjuntoOld){ //Compara se o nó está inserido no conjunto-alvo
+                no.setConjunto(conjuntoNew);//Altera para o novo conjunto
             }
         }
     }
     /**
-     * Encontra o menor caminho entre dois pontos utilizando o algoritmo de dijkstra
-     * @param init origem da busca
+     * Encontra a arvore geradora de custo mínimo utiizando o algoritmo de Kruskal
      */
-    public void kruskal(int init) {
+    public void kruskal() {
 
-        No inicio = nos.get(init); //Onde começa        
-        No atual = inicio; //Nó em que estamos atualmente
         
-        while(listCaminhoMinimo.size() < nos.size()-1){
+        while(arvoreGeradoraMinima.size() < nos.size()-1){ //Por definição a arvore geradora é igual ao numero de Nós menos 1
             findLessAresta();
         }        
         
-        
-        while(!listCaminhoMinimo.isEmpty()){
-            System.out.print("Origem  "+listCaminhoMinimo.peek().getOrigem().getId()+"     ");  
-            System.out.println("Destino  "+listCaminhoMinimo.peek().getDestino().getId());
-            listCaminhoMinimo.remove();
+        System.out.println(arvoreGeradoraMinima.size());
+        while(!arvoreGeradoraMinima.isEmpty()){ //Printa as arestas que compoem o arvore geradora minima
+            System.out.println(arvoreGeradoraMinima.peek().getOrigem().getId()+"  ->  "  + arvoreGeradoraMinima.peek().getDestino().getId());  
+            arvoreGeradoraMinima.remove();
         }
     }
 }
