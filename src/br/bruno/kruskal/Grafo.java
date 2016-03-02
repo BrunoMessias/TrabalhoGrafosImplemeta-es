@@ -62,16 +62,20 @@ public class Grafo {
      */
     public void kruskal() {
 
-        
+        int custo = 0;
+        int tamanho;
         while(arvoreGeradoraMinima.size() < nos.size()-1){ //Por definição a arvore geradora é igual ao numero de Nós menos 1
             findLessAresta();
         }        
-        
-        System.out.println(arvoreGeradoraMinima.size());
+        tamanho = arvoreGeradoraMinima.size();
+ 
         while(!arvoreGeradoraMinima.isEmpty()){ //Printa as arestas que compoem o arvore geradora minima
-            System.out.println(arvoreGeradoraMinima.peek().getOrigem().getId()+"  ->  "  + arvoreGeradoraMinima.peek().getDestino().getId());  
+            System.out.println(arvoreGeradoraMinima.peek().getOrigem().getId()+"  ->  "  + arvoreGeradoraMinima.peek().getDestino().getId()); 
+            custo += arvoreGeradoraMinima.peek().getCusto();
             arvoreGeradoraMinima.remove();
         }
+        System.out.println("Custo ->" + custo);
+        System.out.println("Tamanho ->" + tamanho);
     }
 }
     

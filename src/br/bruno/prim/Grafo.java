@@ -3,10 +3,11 @@ package br.bruno.prim;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Stack;
 
 public class Grafo {
     private List<No> nos = new ArrayList<>();
+    private List<Aresta> mst = new ArrayList<>();
+    int custo =0;
     
     /**
      * Adiciona um vértice na lista de vértices do grafo
@@ -27,16 +28,13 @@ public class Grafo {
     
     /**
      * Encontra a MST utilizando o algoritmo de prim
-     * @param init origem da busca
-     * @param finish destino da busca
+     * @param init
      */
-    public void prim(int init, int finish) {
+    public void prim(int init) {
         //Onde começa
         No inicio = nos.get(init); 
         //O inicio tem custo 0
-        inicio.setDistanciaRelativa(0);  
-        //Onde queremos chegar
-        No fim = nos.get(finish);  
+        inicio.setDistanciaRelativa(0);   
         
         //Lista de nós não verificados
         List<No> nosNaoVerificados = new ArrayList<>(); 
@@ -49,17 +47,19 @@ public class Grafo {
         //Nó em que estamos atualmente
         No atual = inicio; 
         
+        int custoMST = 0;
         //A partir da origem, gera a MST até o fim
         while(!nosNaoVerificados.isEmpty()) {
+
             //Iterando sobre as arestas do nó atual
             for(Aresta aresta: atual.getAdjacentes()) { 
                 
-                //Verifica se o custo para usar esta aresta é menor que o da aresta atualmente utilizada
-                if(aresta.getCusto() < aresta.getDestino().getDistanciaRelativa()) { 
-                   //Altera o custo para a aresta de menor custo
-                   aresta.getDestino().setDistanciaRelativa(aresta.getCusto());
-                   //Define o nó antecessor
-                   aresta.getDestino().setAntecessor(atual); 
+                if(aresta.getDestino().getEstadoNo() == EstadoNo.NAO_VERIFICADO){
+                    if (aresta.getCusto() < aresta.getDestino().getDistanciaRelativa()) {
+                        //Altera o custo para a aresta de menor custo
+                        aresta.getDestino().setDistanciaRelativa(aresta.getCusto());
+                        aresta.getDestino().setMinima(aresta);
+                    }
                 }
             }
             
@@ -77,39 +77,20 @@ public class Grafo {
             }
         }
         
-        //Pilha MST
-        Stack<No> caminhoMinimo = new Stack<>();
-        //Adiciona o o ultimo no na pilha da MST
-        caminhoMinimo.addElement(fim);
-        
-        //Adiciona os elementos na pilha a partir do fim
-        atual = fim;
-        //Ireta sobre os antecessores de cada no
-        while(!atual.equals(inicio)) {
-            //Seleciona o antecessor do no atual
-            atual = atual.getAntecessor();
-            //Adiciona o antecessor na pilha
-            caminhoMinimo.addElement(atual);
+        for(int i = 1 ; i < nos.size(); i++){
+             mst.add(nos.get(i).getMinima());
+             custo += nos.get(i).getMinima().getCusto();
         }
-        
-        int custoMST = 0;
-        //Exibe a MST
-        while(!caminhoMinimo.empty()) {
-            //Remove o topo da pilha
-            atual = caminhoMinimo.pop();
-            
-            //Verifica se a pilha da MST está vazia
-            if(!caminhoMinimo.empty()){
-                //Busca o topo da pilha
-                No proximo = caminhoMinimo.peek();
-                //Exibe o vertice atual, o de destino e o custo relativo para chegar ao destino
-                System.out.println(atual.getId()+"\t->\t"+proximo.getId()+"\tCusto: "+proximo.getDistanciaRelativa());
-                //Soma o custo relativo ao custo total da MST
-                custoMST += proximo.getDistanciaRelativa();
+       
+    for (int i =0 ; i < nos.size(); i++){  
+        for(Aresta aresta : mst){
+                if(aresta.getOrigem().equals(nos.get(i))){
+                 System.out.println(aresta.getOrigem().getId() + "  ->  " + aresta.getDestino().getId());   
+                }
             }
         }
-        //Exibe o custo total da MST
-        System.out.println("Custo MST: "+custoMST);
+        System.out.println("Custo -> " + custo);
+        System.out.println("Tamanno -> " + mst.size());
     }
 }
     

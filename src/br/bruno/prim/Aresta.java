@@ -1,15 +1,18 @@
 package br.bruno.prim;
 
 public class Aresta {
-    private final No origem; 
-    private final No destino;
+    private No origem; 
+    private No destino;
     private final int custo;
     
-    public Aresta(No origem, No destino, int custo) {
+    public Aresta(int custo){
+        this.custo = custo;
+    }
+    
+    private Aresta(No origem, No destino, int custo) {
         this.origem = origem;
         this.destino = destino;
-        this.custo = custo;
-        colocarArestaNaAdjacentes(this);
+        this.custo = custo;;
     }
 
     /**
@@ -36,12 +39,10 @@ public class Aresta {
         return custo;
     }
     
-    /**
-     * Adiciona a aresta a lista de arestas vizinhas dos vértices de origem e destino
-     * @param aresta
-     */
-    private void colocarArestaNaAdjacentes(Aresta aresta){
-        aresta.getOrigem().addAdjacentes(aresta);
-        aresta.getDestino().addAdjacentes(aresta);
+    public static void inserirAresta(No no1, No no2, int custo){
+        Aresta aresta1 = new Aresta(no1, no2, custo);
+        aresta1.getOrigem().addAdjacentes(aresta1);
+        Aresta aresta2 = new Aresta(no2, no1, custo);
+        aresta2.getOrigem().addAdjacentes(aresta2);
     }
 }

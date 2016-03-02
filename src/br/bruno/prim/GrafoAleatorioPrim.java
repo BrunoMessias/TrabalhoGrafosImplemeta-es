@@ -1,4 +1,4 @@
-package br.bruno.kruskal;
+package br.bruno.prim;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.Random;
  *
  * @author tiago
  */
-public class GrafoAleatorioKruskal {
+public class GrafoAleatorioPrim {
     
     public static Grafo gerar(int tamanho, int maxArestas, int maxDistacia, int maxCusto) {
         if(maxArestas > maxDistacia){

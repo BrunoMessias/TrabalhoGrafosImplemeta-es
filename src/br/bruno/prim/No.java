@@ -12,16 +12,34 @@ public class No implements Comparable<No> {
     private List<Aresta> adjacentes;
     //Distâncias relativas para cada vértice
     private int distanciaRelativa;
-    //Nó antecessor de custo mínimo
-    private No antecessor;
+    private Aresta minima;
     
+    private No antecessor;
     public No(String id) {
         this.id = id;
-        distanciaRelativa = Integer.MAX_VALUE;
         antecessor = null;
+        minima = null;
+        distanciaRelativa = Integer.MAX_VALUE;
         adjacentes = new ArrayList<>();
         estadoNo = EstadoNo.NAO_VERIFICADO;
     }
+
+    public No getAntecessor() {
+        return antecessor;
+    }
+
+    public void setAntecessor(No antecessor) {
+        this.antecessor = antecessor;
+    }
+
+    public void setMinima(Aresta minima) {
+        this.minima = minima;
+    }
+
+    public Aresta getMinima() {
+        return minima;
+    }
+ 
     
     /**
      * Distância relativa para chegar a este vértice
@@ -53,22 +71,6 @@ public class No implements Comparable<No> {
      */
     public void setEstadoNo(EstadoNo estadoNo) {
         this.estadoNo = estadoNo;
-    }
-    
-    /**
-     * Vértice antecessor deste na MST
-     * @return vértice antecessor
-     */
-    public No getAntecessor() {
-        return antecessor;
-    }
-    
-    /**
-     * Altera o vértice antecessor deste
-     * @param antecessor novo antecessor
-     */
-    public void setAntecessor(No antecessor) {
-        this.antecessor = antecessor;
     }
     
     /**
@@ -108,7 +110,9 @@ public class No implements Comparable<No> {
         if(this.getDistanciaRelativa() < no.getDistanciaRelativa()) {
             return -1;
         } else {
+            if(this.getDistanciaRelativa() > no.getDistanciaRelativa())
             return 1;
         }
+        return 0;
     }       
 }
