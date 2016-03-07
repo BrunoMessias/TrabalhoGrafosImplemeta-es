@@ -12,5 +12,9 @@ public enum EstadoNo {
     /**
      * O nó está fechado
      */
-    FECHADO
+    FECHADO,
+    /**
+     * O nó foi visitado
+     */
+    VISITADO
 }

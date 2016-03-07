@@ -9,45 +9,47 @@ public class Main {
     /**
      * Monta o grafo e busca o menor caminho entre dois pontos
      */
-    public static void main(String[] args) {
-        Grafo grafo = new Grafo();
+    public static void main(String[] args) throws Exception {
+        Grafo grafo = GrafoAleatorioDijkstra.gerar(1000, 10, 10, 50);
         
-        //Cria os nós do grafo
-        No no;
-        no = new No("SF");//0
-        grafo.addNo(no);
-        no = new No("LA");//1
-        grafo.addNo(no);
-        no = new No("D");//2
-        grafo.addNo(no);
-        no = new No("C");//3
-        grafo.addNo(no);
-        no = new No("A");//4
-        grafo.addNo(no);
-        no = new No("B");//5
-        grafo.addNo(no);
-        no = new No("NY");//6
-        grafo.addNo(no);
-        no = new No("M");//7
-        grafo.addNo(no);
+        Grafo grafoClone = grafo.clone();
+
+        grafo.dijkstraHeap(0,7);
+        System.out.println(grafoClone.getNo(0).getEstadoNo());
+        System.out.println(grafo.getNo(0).getEstadoNo());
+        //grafo.dijkstra(0,7);
+        //grafoClone.dijkstraHeap(0,7);
         
-        //Cria as arestas do nó
-        new Aresta(grafo.getNo(0), grafo.getNo(1), 39);
-        new Aresta(grafo.getNo(0), grafo.getNo(2), 89);
-        new Aresta(grafo.getNo(0), grafo.getNo(3), 120);
-        new Aresta(grafo.getNo(0), grafo.getNo(6), 210);
-        new Aresta(grafo.getNo(1), grafo.getNo(2), 50);
-        new Aresta(grafo.getNo(1), grafo.getNo(6), 170);
-        new Aresta(grafo.getNo(2), grafo.getNo(3), 65);
-        new Aresta(grafo.getNo(3), grafo.getNo(5), 79);
-        new Aresta(grafo.getNo(3), grafo.getNo(6), 59);
-        new Aresta(grafo.getNo(3), grafo.getNo(4), 99);
-        new Aresta(grafo.getNo(4), grafo.getNo(6), 80);
-        new Aresta(grafo.getNo(4), grafo.getNo(7), 70);
-        new Aresta(grafo.getNo(5), grafo.getNo(6), 20);
-        new Aresta(grafo.getNo(6), grafo.getNo(7), 66);
         
-        //Descobre o menor caminho
-        grafo.dijkstra(0,7);
+//        Cria os nós do grafo
+//        No no;
+//        no = new No("1");//0
+//        grafo.addNo(no);
+//        no = new No("2");//1
+//        grafo.addNo(no);
+//        no = new No("3");//2
+//        grafo.addNo(no);
+//        no = new No("4");//3
+//        grafo.addNo(no);
+//        no = new No("5");//4
+//        grafo.addNo(no);
+//        no = new No("6");//5
+//        grafo.addNo(no);
+//        no = new No("7");//6
+//        grafo.addNo(no);
+//        
+//        //Cria as arestas do nó
+//        Aresta.inserirAresta(grafo.getNo(0), grafo.getNo(1), 2);
+//        Aresta.inserirAresta(grafo.getNo(0), grafo.getNo(2), 5);
+//        Aresta.inserirAresta(grafo.getNo(0), grafo.getNo(3), 4);
+//        Aresta.inserirAresta(grafo.getNo(1), grafo.getNo(2), 2);
+//        Aresta.inserirAresta(grafo.getNo(1), grafo.getNo(4), 7);
+//        Aresta.inserirAresta(grafo.getNo(2), grafo.getNo(3), 1);
+//        Aresta.inserirAresta(grafo.getNo(2), grafo.getNo(4), 4);
+//        Aresta.inserirAresta(grafo.getNo(2), grafo.getNo(5), 3);
+//        Aresta.inserirAresta(grafo.getNo(3), grafo.getNo(5), 4);
+//        Aresta.inserirAresta(grafo.getNo(4), grafo.getNo(5), 1);
+//        Aresta.inserirAresta(grafo.getNo(4), grafo.getNo(6), 5);
+//        Aresta.inserirAresta(grafo.getNo(5), grafo.getNo(6), 7);
     }
 }
