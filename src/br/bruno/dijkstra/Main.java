@@ -9,14 +9,11 @@ public class Main {
     /**
      * Monta o grafo e busca o menor caminho entre dois pontos
      */
-    public static void main(String[] args) throws Exception {
-        Grafo grafo = GrafoAleatorioDijkstra.gerar(1000, 10, 10, 50);
-        
-        Grafo grafoClone = grafo.clone();
-
-        grafo.dijkstraHeap(0,7);
-        System.out.println(grafoClone.getNo(0).getEstadoNo());
-        System.out.println(grafo.getNo(0).getEstadoNo());
+    public static void main(String[] args){
+        Grafo grafo = GrafoAleatorioDijkstra.gerar(50000, 10, 10, 50);
+        grafo.dijkstraHeap(0,9999);
+        grafo.resetGrafo();
+        grafo.dijkstra(0, 9999);
         //grafo.dijkstra(0,7);
         //grafoClone.dijkstraHeap(0,7);
         

@@ -18,7 +18,7 @@ public class GrafoAleatorioDijkstra {
         
         No[] nos = new No[tamanho];
         
-        int i = 0;
+        int i;
         for(i=0; i<tamanho; i++) {
             nos[i] = new No(String.valueOf(i+1));
             grafo.addNo(nos[i]);

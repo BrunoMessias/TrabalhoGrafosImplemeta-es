@@ -1,20 +1,15 @@
 package br.bruno.dijkstra;
 
-import java.io.Serializable;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Definição de um grafo
  * @author bruno
  */
-public class Grafo implements Cloneable, Serializable{
+public class Grafo {
     private List<No> nos = new ArrayList<>(); //Nós desse grafo
     
     public List<No> getNos(){
@@ -71,6 +66,7 @@ public class Grafo implements Cloneable, Serializable{
         
         long stopTime = System.currentTimeMillis();
         long elapsedTime = stopTime - startTime;
+
         
         //Controi o menos caminho da origem até o destino
         Stack<No> caminhoMinimo = new Stack<>(); //Uma pilha para montar o caminha mínimo do fim para o inicio
@@ -81,14 +77,14 @@ public class Grafo implements Cloneable, Serializable{
             atual = atual.getAntecessor();
             caminhoMinimo.addElement(atual);
         }
-        
+        System.out.println("Tamanho do caminho sem heap = " +caminhoMinimo.size());
         //Exibe todos os nós na pilha de caminho mínimo
         while(!caminhoMinimo.empty()) {
             atual = caminhoMinimo.pop();
-            System.out.println("NO:" + atual.getId());
+           // System.out.println("NO:" + atual.getId());
         }
         
-        System.out.println(elapsedTime);
+        System.out.println("Tempo sem heap = " +elapsedTime+"ms\n");
     }
     
     public void dijkstraHeap(int init, int finish) {
@@ -117,6 +113,7 @@ public class Grafo implements Cloneable, Serializable{
             }
             long stopTime = System.currentTimeMillis();
             long elapsedTime = stopTime - startTime;
+          
             
             No fim = nos.get(finish);  //Onde queremos chegar
             //Controi o menos caminho da origem até o destino
@@ -128,14 +125,14 @@ public class Grafo implements Cloneable, Serializable{
                 atual = atual.getAntecessor();
                 caminhoMinimo.addElement(atual);
             }
-
+            System.out.println("Tamanho do caminho com heap = " +caminhoMinimo.size());
             //Exibe todos os nós na pilha de caminho mínimo
             while(!caminhoMinimo.empty()) {
                 atual = caminhoMinimo.pop();
-                System.out.println("NO:" + atual.getId());
+             //   System.out.println("NO:" + atual.getId());
             }
             
-            System.out.println(elapsedTime);
+            System.out.println("Tempo com heap = " +elapsedTime + "ms\n");
     }
     
     public static class Heap {
@@ -237,17 +234,13 @@ public class Grafo implements Cloneable, Serializable{
                 return heap.isEmpty();
             }
         }
-    
-    
-    @Override
-    public Grafo clone(){
-        try {
-            return (Grafo)super.clone();
-        } catch (CloneNotSupportedException ex) {
-            System.out.println("Erro ao clonar.");
-            return null;
+        public void resetGrafo(){
+            for (No no : nos){
+                no.setAntecessor(null);
+                no.setCustoMinimo(Integer.MAX_VALUE-10);
+                no.setEstadoNo(EstadoNo.ABERTO);
+            }
         }
-    }
     
     
 }

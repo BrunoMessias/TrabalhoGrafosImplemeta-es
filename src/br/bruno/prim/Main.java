@@ -71,7 +71,7 @@ public class Main {
         Aresta.inserirAresta(grafo.getNo(5), grafo.getNo(6), 20);
         Aresta.inserirAresta(grafo.getNo(6), grafo.getNo(7), 66);*/
         //Prim
-        Grafo grafo = GrafoAleatorioPrim.gerar(50000, 20, 25, 100);
+        Grafo grafo = GrafoAleatorioPrim.gerar(1000, 10, 10, 100);
         grafo.prim(0);
     }
 }
